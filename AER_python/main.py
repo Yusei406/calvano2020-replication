@@ -5,12 +5,12 @@ import json
 import pickle  # 追加
 import numpy as np
 
-from config import Config
-from environment import Environment
-from agent import Agent
-from train import Trainer
-from evaluation import Evaluator
-from impulse_response import ImpulseResponseAnalyzer
+from AER_python.config import Config
+from AER_python.environment import Environment
+from AER_python.agent import Agent
+from AER_python.train import Trainer
+from AER_python.evaluation import Evaluator
+from AER_python.impulse_response import ImpulseResponseAnalyzer
 
 def convert_for_json(o):
     """

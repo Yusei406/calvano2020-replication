@@ -11,6 +11,7 @@ Calvano, E., Calzolari, G., Denicolò, V., & Pastorello, S. (2020). "Artificial 
 ```text
 .
 ├── AER_python/             # ソースコード
+│   ├── __init__.py         # パッケージ定義
 │   ├── config.py           # 実験パラメータ設定（ステップ数、学習率など）
 │   ├── environment.py      # 経済環境（Logit需要モデル：消費者の選択確率に基づく需要関数）
 │   ├── train.py            # 学習ループ（Numbaによる高速化実装）
@@ -19,6 +20,7 @@ Calvano, E., Calzolari, G., Denicolò, V., & Pastorello, S. (2020). "Artificial 
 │   ├── main.py             # 実験の実行エントリーポイント
 │   └── test_components.py  # 各モジュールの単体・統合テスト
 ├── results/                # 実験結果の出力先（初回実行時に自動生成されます）
+│   └── README.md           # 結果ファイルの追跡方針
 ├── requirements.txt        # 依存ライブラリ一覧
 └── README.md               # 本ファイル
 ```
@@ -32,9 +34,9 @@ Calvano, E., Calzolari, G., Denicolò, V., & Pastorello, S. (2020). "Artificial 
 以下の手順でセットアップを行ってください。
 
 1. **ライブラリのインストール**
-   高速化のために `numba` を使用しています。
+   再現性のため、依存ライブラリはバージョン固定しています。
    ```bash
-   pip install -r requirements.txt
+   python3 -m pip install -r requirements.txt
    ```
 
 ## 🚀 実行方法
@@ -42,13 +44,13 @@ Calvano, E., Calzolari, G., Denicolò, V., & Pastorello, S. (2020). "Artificial 
 プロジェクトのルートディレクトリで以下のコマンドを実行します。
 
 ```bash
-python3 AER_python/main.py
+python3 -m AER_python.main
 ```
 
 ### 実行の流れ
 1.  **初期化**: 設定に基づき、環境とエージェントを初期化します。
-2.  **シミュレーション**: 30セッション（各1,000万ステップ）の学習を逐次的に実行します。
-    *   NumbaによるJITコンパイルにより、数秒〜数十秒で完了します。
+2.  **シミュレーション**: 100セッション（各1,000万ステップ）の学習を逐次的に実行します。
+    *   NumbaによるJITコンパイルにより、数十秒〜数分程度で完了します（環境依存）。
 3.  **集計**: 収束率、平均価格、平均利潤、協力指数（Delta）を計算します。
 4.  **保存**: `results/YYYYMMDD_HHMMSS/` フォルダに結果を出力します。
 
@@ -59,7 +61,7 @@ python3 AER_python/main.py
 | 目的 | AIエージェントが“アルゴリズム的共謀”を自律的に形成するか検証 |
 | モデル | 2社の同質財市場、Logit需要モデル、離散的な価格グリッド |
 | 学習 | Q学習（ε-greedy探索を指数減衰） |
-| 成果物 | 30セッション分の学習結果、統計サマリー、インパルス応答グラフ |
+| 成果物 | 100セッション分の学習結果、統計サマリー、インパルス応答グラフ |
 
 > **ポイント**: 収束した価格・利潤がナッシュ均衡より大幅に高い場合、「暗黙の談合」が起きていると判断できます。
 
@@ -104,13 +106,19 @@ class Config:
 コードの動作確認を行いたい場合は、テストスクリプトを実行してください。
 
 ```bash
-python3 AER_python/test_components.py
+python3 -m AER_python.test_components
 ```
 
 ## 📝 備考
 
 *   **再現性について**: `main.py` 実行時に乱数シードを制御しているため、同じ設定であれば同じ結果が再現されます。
-*   **計算時間**: M1 Mac等の環境では30セッションでおよそ10秒程度ですが、マシンスペックにより変動します。
+*   **計算時間**: M1 Mac等の環境では100セッションで数十秒〜数分程度が目安ですが、マシンスペックにより変動します。
+
+## 📦 リポジトリ運用方針（results）
+
+*   `results/` は生成物ディレクトリです。新規実行結果は原則Git追跡しません。
+*   再現性の参照用として、`results/20251218_172404/` のみ代表サンプルを追跡しています。
+*   大容量バイナリ（`results.pkl`）は追跡対象外です。
 
 ---
 Created for Graduation Thesis, 2025.

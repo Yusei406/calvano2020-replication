@@ -1,20 +1,15 @@
 import numpy as np
-import sys
 import os
 import time
-import shutil
 import tracemalloc
 
-# パスを通す
-sys.path.append(os.path.join(os.getcwd(), 'AER_python'))
-
-from config import Config
-from environment import Environment
-from agent import Agent
-from train import Trainer
-from evaluation import Evaluator
-from impulse_response import ImpulseResponseAnalyzer
-from main import main 
+from AER_python.config import Config
+from AER_python.environment import Environment
+from AER_python.agent import Agent
+from AER_python.train import Trainer
+from AER_python.evaluation import Evaluator
+from AER_python.impulse_response import ImpulseResponseAnalyzer
+from AER_python.main import main
 
 def test_config():
     print("--- Config Test ---")

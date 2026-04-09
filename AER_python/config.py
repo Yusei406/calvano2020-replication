@@ -1,5 +1,3 @@
-import numpy as np
-
 class Config:
     """
     実験パラメータ管理クラス

@@ -16,9 +16,16 @@ venv/
 # Jupyter
 .ipynb_checkpoints/
 
-# 実験結果（バイナリ・大容量ファイル）
-results/*.pkl
-results/**/*.pkl
+# 実験結果（生成物は原則追跡しない）
+results/*
+!results/README.md
+!results/20251218_172404/
+!results/20251218_172404/config.json
+!results/20251218_172404/summary.json
+!results/20251218_172404/histogram_price.png
+!results/20251218_172404/irf_price.png
+!results/20251218_172404/irf_profit.png
+results/20251218_172404/results.pkl
 
 # macOS
 .DS_Store
