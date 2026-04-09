@@ -1,6 +1,8 @@
 import numpy as np
+import argparse
 import os
 import time
+import tempfile
 import tracemalloc
 
 from AER_python.config import Config
@@ -10,6 +12,17 @@ from AER_python.train import Trainer
 from AER_python.evaluation import Evaluator
 from AER_python.impulse_response import ImpulseResponseAnalyzer
 from AER_python.main import main
+
+
+def run_in_temp_workspace(func):
+    """Run tests that write output in an isolated temporary directory."""
+    current_dir = os.getcwd()
+    with tempfile.TemporaryDirectory() as temp_dir:
+        os.chdir(temp_dir)
+        try:
+            return func()
+        finally:
+            os.chdir(current_dir)
 
 def test_config():
     print("--- Config Test ---")
@@ -236,17 +249,15 @@ def test_realistic_convergence(env):
 def test_memory_usage():
     print("--- Memory Usage Test ---")
     tracemalloc.start()
-    
-    # メモリ計測のため、メインの処理を一度流す（軽量Configで）
+
     class MemConfig(Config):
         max_steps = 1000
         n_sessions = 5
         convergence_window = 100
-        
+
     c = MemConfig()
-    # main関数を呼び出し（出力抑制してもよいがそのまま）
-    main(test_config=c)
-    
+    run_in_temp_workspace(lambda: main(test_config=c))
+
     current, peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
     
@@ -258,9 +269,34 @@ def test_memory_usage():
 def test_evaluator(env):
     print("--- Evaluator Test ---")
     c = Config()
-    res0 = {'session_id': 0, 'converged': False, 'steps': 1000, 'avg_price': None, 'avg_profit': None}
-    res1 = {'session_id': 1, 'converged': True, 'steps': 500, 'avg_price': 1.5, 'avg_profit': 0.23}
-    res2 = {'session_id': 2, 'converged': True, 'steps': 600, 'avg_price': 1.9, 'avg_profit': 0.33}
+    q = np.zeros((2, c.m_grid ** 2, c.m_grid))
+    res0 = {
+        'session_id': 0,
+        'converged': False,
+        'steps': 1000,
+        'avg_price': None,
+        'avg_profit': None,
+        'q_matrices': None,
+        'final_state': None,
+    }
+    res1 = {
+        'session_id': 1,
+        'converged': True,
+        'steps': 500,
+        'avg_price': 1.5,
+        'avg_profit': 0.23,
+        'q_matrices': q,
+        'final_state': 0,
+    }
+    res2 = {
+        'session_id': 2,
+        'converged': True,
+        'steps': 600,
+        'avg_price': 1.9,
+        'avg_profit': 0.33,
+        'q_matrices': q,
+        'final_state': 0,
+    }
     
     results = [res0, res1, res2]
     evaluator = Evaluator(c, results, env)
@@ -304,37 +340,64 @@ def test_impulse_response(env):
 
 def test_main_integration():
     print("--- Main Integration Test ---")
-    
-    class TestMainConfig(Config):
-        max_steps = 2000
-        n_sessions = 2
-        convergence_window = 100
-        l_buffer = 100
-    
-    c = TestMainConfig()
-    main(test_config=c)
-    
-    # 確認
-    subdirs = sorted([d for d in os.listdir("results") if os.path.isdir(os.path.join("results", d))])
-    if subdirs:
-        latest_dir = os.path.join("results", subdirs[-1])
-        print(f"Checking output directory: {latest_dir}")
-        if os.path.exists(os.path.join(latest_dir, "summary.json")):
-            print("  OK: summary.json exists.")
-        else:
-            print("  FAIL: summary.json NOT found.")
-            
+
+    def _run():
+        class TestMainConfig(Config):
+            max_steps = 2000
+            n_sessions = 2
+            convergence_window = 100
+            l_buffer = 100
+
+        c = TestMainConfig()
+        main(test_config=c)
+
+        subdirs = sorted([d for d in os.listdir("results") if os.path.isdir(os.path.join("results", d))])
+        if subdirs:
+            latest_dir = os.path.join("results", subdirs[-1])
+            print(f"Checking output directory: {latest_dir}")
+            if os.path.exists(os.path.join(latest_dir, "summary.json")):
+                print("  OK: summary.json exists.")
+            else:
+                print("  FAIL: summary.json NOT found.")
+
+    run_in_temp_workspace(_run)
     print("Main Integration Test Passed.\n")
 
-if __name__ == "__main__":
+
+def run_quick_suite():
+    test_config()
+    env = test_environment()
+    test_agent(env)
+    test_trainer(env)
+    test_reproducibility(env)
+    test_evaluator(env)
+    test_impulse_response(env)
+    test_main_integration()
+
+
+def run_full_suite():
     test_config()
     env = test_environment()
     test_agent(env)
     test_trainer(env)
     test_trainer_extended(env)
-    test_reproducibility(env)    # 新規追加
-    test_realistic_convergence(env) # 新規追加
+    test_reproducibility(env)
+    test_realistic_convergence(env)
     test_evaluator(env)
     test_impulse_response(env)
     test_main_integration()
-    test_memory_usage()          # 新規追加
+    test_memory_usage()
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run validation suites for the Calvano replication code.")
+    parser.add_argument(
+        "--full",
+        action="store_true",
+        help="Run the extended suite including benchmark-style and memory tests.",
+    )
+    args = parser.parse_args()
+
+    if args.full:
+        run_full_suite()
+    else:
+        run_quick_suite()

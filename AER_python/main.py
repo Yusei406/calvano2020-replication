@@ -66,7 +66,7 @@ def main(test_config=None):
     # 1. 初期化
     try:
         # テスト用のConfigが渡されたらそれを使う
-        if test_config:
+        if test_config is not None:
             config = test_config
         else:
             config = Config()
