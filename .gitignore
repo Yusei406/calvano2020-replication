@@ -1,0 +1,72 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+.env
+.venv
+env/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# 実験結果（バイナリ・大容量ファイル）
+results/*.pkl
+results/**/*.pkl
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V7
+.Trashes
+
+# LaTeX 中間生成物
+*.aux
+*.log
+*.dvi
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.out
+*.bbl
+*.blg
+
+# 論文・ドキュメント類（コードリポジトリに不要）
+*.pdf
+*.docx
+*.zip
+draft.md
+thesis_converted.md
+thesis_converted_v2.md
+main.tex
+template*.tex
+overleaf_*/
+overleaf_*.zip
+overleaf_project/
+overleaf_upload/
+
+# HTML 変換スクリプト（一時的なユーティリティ）
+AI価格設定*.html
+calvano_article.html
+convert_notion_html*.py
+inspect_html*.py
+inspect_images.py
+md_to_latex.py
+
+# オリジナルAERコード（Rスクリプト等）
+AER_fcode/
+AER_online_appendix_Rscripts/
+AER_paper_Rscripts/
+AER-software-guide/
+
+# 空ディレクトリ
+python_implementation/

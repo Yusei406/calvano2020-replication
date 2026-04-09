@@ -1,0 +1,18 @@
+{
+    "total_sessions": 100,
+    "converged_sessions": 100,
+    "convergence_rate": 1.0,
+    "nash_price": 1.47293,
+    "monopoly_price": 1.92498,
+    "nash_profit": 0.22292806391717349,
+    "monopoly_profit": 0.3374904595082646,
+    "avg_steps_mean": 1160241.97,
+    "avg_steps_std": 229599.31452726317,
+    "avg_price_mean": 1.7672952732142857,
+    "avg_price_std": 0.05661080478232712,
+    "avg_profit_mean": 0.3121646382955722,
+    "avg_profit_std": 0.011025729878594124,
+    "delta_mean": 0.7789342560268371,
+    "delta_std": 0.09624213793458361,
+    "total_elapsed_time": 30.210150241851807
+}
