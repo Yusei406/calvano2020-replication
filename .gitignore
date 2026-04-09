@@ -75,5 +75,15 @@ AER_online_appendix_Rscripts/
 AER_paper_Rscripts/
 AER-software-guide/
 
+# 開発用ユーティリティスクリプト（コアではない）
+analyze_sessions.py
+check_irf.py
+find_stable_session.py
+reanalyze.py
+redraw_histogram.py
+restore_session10.py
+run_irf_manual.py
+select_best_irf.py
+
 # 空ディレクトリ
 python_implementation/

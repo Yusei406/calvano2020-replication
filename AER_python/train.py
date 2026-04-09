@@ -75,7 +75,7 @@ def run_simulation_jit(
     profits, # (n_states, 2)
     prices,  # (m_grid,)
     l_buffer,
-    seed     # 追加: シード値
+    seed
 ):
     """
     JITコンパイルされた学習ループ

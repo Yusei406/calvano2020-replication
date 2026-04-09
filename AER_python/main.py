@@ -2,7 +2,7 @@ import os
 import time
 import datetime
 import json
-import pickle  # 追加
+import pickle
 import numpy as np
 
 from AER_python.config import Config

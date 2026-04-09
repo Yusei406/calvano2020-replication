@@ -1,10 +1,19 @@
 # AI価格協調シミュレーション (Replication of Calvano et al., 2020)
 
-本リポジトリは、強化学習（Q学習：試行錯誤を通じて最適な行動を学ぶ機械学習手法）を用いたAIエージェントが、明示的なコミュニケーションなしに価格カルテル（アルゴリズム的共謀：アルゴリズムが互いに暗黙で協調すること）を形成するか検証したシミュレーションコードです。
+[![Smoke Test](https://github.com/Yusei406/calvano2020-replication/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/Yusei406/calvano2020-replication/actions/workflows/smoke-test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/downloads/)
 
-近年、ECサイト等でアルゴリズムによる自動価格設定が普及する中、AIが自律的に談合状態（高価格の維持）に陥り、消費者に不利益をもたらすリスクが懸念されています。本研究は、この社会的インパクトの大きい現象をシミュレーションによって再現し、そのメカニズムを検証することを目的としています。
+本リポジトリは、強化学習（Q学習）を用いたAIエージェントが、明示的なコミュニケーションなしにアルゴリズム的共謀（暗黙の価格カルテル）を形成するか検証したシミュレーションコードです。
 
 Calvano, E., Calzolari, G., Denicolò, V., & Pastorello, S. (2020). "Artificial Intelligence, Algorithmic Pricing, and Collusion." *American Economic Review*, 110(10): 3267-3297.
+
+> **English Summary**
+>
+> Python replication of the Q-learning algorithmic collusion model from Calvano et al. (*AER*, 2020).
+> Two autonomous pricing agents learn to collude above the Nash equilibrium without explicit communication,
+> exhibiting supra-competitive prices and punishment-based reward strategies characteristic of tacit collusion.
+> Built with NumPy and Numba for high-performance simulation.
 
 ## 📁 ディレクトリ構成
 
@@ -22,6 +31,7 @@ Calvano, E., Calzolari, G., Denicolò, V., & Pastorello, S. (2020). "Artificial 
 ├── results/                # 実験結果の出力先（初回実行時に自動生成されます）
 │   └── README.md           # 結果ファイルの追跡方針
 ├── requirements.txt        # 依存ライブラリ一覧
+├── LICENSE                 # MITライセンス
 └── README.md               # 本ファイル
 ```
 
@@ -126,6 +136,23 @@ python3 -m AER_python.test_components --full
 *   `results/` は生成物ディレクトリです。新規実行結果は原則Git追跡しません。
 *   再現性の参照用として、`results/20251218_172404/` のみ代表サンプルを追跡しています。
 *   大容量バイナリ（`results.pkl`）は追跡対象外です。
+
+## 📖 引用 / Citation
+
+本コードを利用する場合は、元論文およびオリジナルのAERリポジトリへの引用をお願いします。
+
+```bibtex
+@article{calvano2020artificial,
+  title   = {Artificial Intelligence, Algorithmic Pricing, and Collusion},
+  author  = {Calvano, Emilio and Calzolari, Giacomo and Denicol{\`o}, Vincenzo and Pastorello, Sergio},
+  journal = {American Economic Review},
+  volume  = {110},
+  number  = {10},
+  pages   = {3267--3297},
+  year    = {2020},
+  doi     = {10.1257/aer.20190623}
+}
+```
 
 ---
 Created for Graduation Thesis, 2025.
