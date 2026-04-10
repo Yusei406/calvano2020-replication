@@ -3,6 +3,8 @@
 [![Smoke Test](https://github.com/Yusei406/calvano2020-replication/actions/workflows/smoke-test.yml/badge.svg)](https://github.com/Yusei406/calvano2020-replication/actions/workflows/smoke-test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/downloads/)
+[![DOI](https://img.shields.io/badge/DOI-10.1257%2Faer.20190623-blue)](https://doi.org/10.1257/aer.20190623)
+[![Last Commit](https://img.shields.io/github/last-commit/Yusei406/calvano2020-replication)](https://github.com/Yusei406/calvano2020-replication/commits/main)
 
 本リポジトリは、強化学習（Q学習）を用いたAIエージェントが、明示的なコミュニケーションなしにアルゴリズム的共謀（暗黙の価格カルテル）を形成するか検証したシミュレーションコードです。
 
@@ -31,6 +33,7 @@ Calvano, E., Calzolari, G., Denicolò, V., & Pastorello, S. (2020). "Artificial 
 ├── results/                # 実験結果の出力先（初回実行時に自動生成されます）
 │   └── README.md           # 結果ファイルの追跡方針
 ├── requirements.txt        # 依存ライブラリ一覧
+├── CITATION.cff            # GitHub citation metadata
 ├── LICENSE                 # MITライセンス
 └── README.md               # 本ファイル
 ```
@@ -140,6 +143,8 @@ python3 -m AER_python.test_components --full
 ## 📖 引用 / Citation
 
 本コードを利用する場合は、元論文およびオリジナルのAERリポジトリへの引用をお願いします。
+
+GitHub 上では `CITATION.cff` により `Cite this repository` ボタンが有効になります。
 
 ```bibtex
 @article{calvano2020artificial,

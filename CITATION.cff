@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+title: "AI価格協調シミュレーション (Replication of Calvano et al., 2020)"
+message: "If you use this repository, please cite both this replication repository and the original AER paper."
+type: software
+authors:
+  - family-names: "Nozawa"
+    given-names: "Yusei"
+repository-code: "https://github.com/Yusei406/calvano2020-replication"
+url: "https://github.com/Yusei406/calvano2020-replication"
+license: "MIT"
+abstract: "Python replication of the Q-learning algorithmic collusion model from Calvano et al. (2020, American Economic Review)."
+keywords:
+  - reinforcement learning
+  - q-learning
+  - algorithmic collusion
+  - algorithmic pricing
+  - industrial organization
+  - economics
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Calvano"
+      given-names: "Emilio"
+    - family-names: "Calzolari"
+      given-names: "Giacomo"
+    - family-names: "Denicolo"
+      given-names: "Vincenzo"
+    - family-names: "Pastorello"
+      given-names: "Sergio"
+  title: "Artificial Intelligence, Algorithmic Pricing, and Collusion"
+  journal: "American Economic Review"
+  year: 2020
+  volume: 110
+  issue: 10
+  start: 3267
+  end: 3297
+  doi: "10.1257/aer.20190623"
